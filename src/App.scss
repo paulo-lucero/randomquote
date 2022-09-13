@@ -1,0 +1,117 @@
+$quote-cont-width: 50em;
+$quote-cont-height: 30em;
+$backg-color: #EEEEEE;
+$font-color: #3B3B44;
+
+#wait-quote {
+    z-index: 2;
+    height: 100vh;
+    width: 100vw;
+    background-color: $backg-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $font-color;
+    font-size: 2em;
+}
+
+#root {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    background-color: $backg-color;
+}
+
+%arrow-button {
+    width: 5em;
+    height: 5em;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.arrow-button-forward {
+    @extend %arrow-button;
+}
+
+.arrow-button-backward {
+    transform: rotate(180deg);
+    @extend %arrow-button;
+}
+
+#quote-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &, * {
+        box-sizing: content-box;
+    }
+
+    > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        height: 20em;
+        align-items: center;
+    }
+}
+
+#quote-content {
+    max-width: 30em;
+    width: 40%;
+    margin: 0 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    color: $font-color;
+    font-size: 1.5em;
+    font-family: serif;
+}
+
+#quote-container {
+    > * {
+        margin: 2em 0;
+    }
+}
+
+#text {
+    font-style: italic;
+}
+
+#tweet-quote {
+    width: 7em;
+    height: 7em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: $font-color;
+    color: $backg-color;
+    text-decoration: none;
+}
+
+#author {
+    font-weight: 600;
+}
+
+@media (min-height: $quote-cont-height) {
+    #root {
+        align-items: center;
+    }
+
+    #quote-box {
+        height: $quote-cont-height;
+    }
+}
+
+@media (min-width: $quote-cont-width) {
+    #quote-box {
+        width: $quote-cont-width;
+    }
+}

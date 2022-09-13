@@ -1,0 +1,11 @@
+quote animation
+-quote-content and quote should have fixed width and height based on em
+-have fixed width and height for the quotes
+-the quotes have parent element before quote-content
+-use transform (translate) and requestAnimationFrame()
+-transform origin
+ -top left
+ -center left
+-final size
+ -total translateX for total width of the container quote
+-quote should be fully displayed at 1.5ms

@@ -1,7 +1,9 @@
 $quote-cont-width: 50em;
 $quote-cont-height: 30em;
+$quote-font-size: 1.5em;
 $backg-color: #EEEEEE;
 $font-color: #3B3B44;
+$shading: #18181b;
 
 #wait-quote {
     z-index: 2;
@@ -16,7 +18,7 @@ $font-color: #3B3B44;
 }
 
 #root {
-    height: 100vh;
+    position: relative;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -46,15 +48,16 @@ $font-color: #3B3B44;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     &, * {
-        box-sizing: content-box;
+        box-sizing: border-box;
     }
 
-    > div {
+    #inner-quote-box {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         width: 100%;
         height: 20em;
         align-items: center;
@@ -62,19 +65,48 @@ $font-color: #3B3B44;
 }
 
 #quote-content {
-    max-width: 30em;
-    width: 40%;
-    margin: 0 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     height: 100%;
-    color: $font-color;
-    font-size: 1.5em;
-    font-family: serif;
+    overflow: hidden;
 }
 
 #quote-container {
+    @extend #quote-content;
+}
+
+#swipeable-notif {
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: $backg-color;
+    font-size: 1.2rem;
+    opacity: .9;
+    display: flex;
+    background-color: $font-color;
+    justify-content: center;
+    align-items: center;
+}
+
+%quotes-style {
+    display: flex;
+    justify-content: center;
+    color: $font-color;
+    font-size: $quote-font-size;
+    font-family: serif;
+    height: 100%;
+    float: left;
+    padding: 0 0.5rem;
+}
+
+.wait-quotes {
+    @extend %quotes-style;
+    align-items: center;
+}
+
+.quotes {
+    @extend %quotes-style;
+    flex-direction: column;
+
     > * {
         margin: 2em 0;
     }
@@ -85,23 +117,22 @@ $font-color: #3B3B44;
 }
 
 #tweet-quote {
-    width: 7em;
-    height: 7em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: $font-color;
-    color: $backg-color;
-    text-decoration: none;
+    width: 3em !important;
+    height: 3em !important;
+}
+
+.tweet-touch {
+    fill: $shading !important;
 }
 
 #author {
     font-weight: 600;
+    text-align: end;
 }
 
 @media (min-height: $quote-cont-height) {
     #root {
+        height: 100vh;
         align-items: center;
     }
 
@@ -110,8 +141,16 @@ $font-color: #3B3B44;
     }
 }
 
-@media (min-width: $quote-cont-width) {
-    #quote-box {
-        width: $quote-cont-width;
+@media (hover: hover) {
+    .hovered-arrow {
+        fill: $shading !important;
+    }
+
+    #tweet-quote:hover {
+        cursor: pointer;
+
+        path:hover {
+            fill: $shading !important;
+        }
     }
 }

@@ -19,6 +19,9 @@
 .env.production.local
 *.code-workspace
 /backup
+/test
+*.txt
+src/*.svg
 
 npm-debug.log*
 yarn-debug.log*

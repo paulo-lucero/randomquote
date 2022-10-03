@@ -4,6 +4,11 @@ $quote-font-size: 1.5em;
 $backg-color: #EEEEEE;
 $font-color: #3B3B44;
 $shading: #18181b;
+$default-font: serif;
+
+body {
+    background-color: $backg-color;
+}
 
 #wait-quote {
     z-index: 2;
@@ -80,6 +85,7 @@ $shading: #18181b;
     top: 0;
     color: $backg-color;
     font-size: 1.2rem;
+    font-family: $default-font;
     opacity: .9;
     display: flex;
     background-color: $font-color;
@@ -92,7 +98,7 @@ $shading: #18181b;
     justify-content: center;
     color: $font-color;
     font-size: $quote-font-size;
-    font-family: serif;
+    font-family: $default-font;
     height: 100%;
     float: left;
     padding: 0 0.5rem;
@@ -131,6 +137,7 @@ $shading: #18181b;
 }
 
 @media (min-height: $quote-cont-height) {
+
     #root {
         height: 100vh;
         align-items: center;

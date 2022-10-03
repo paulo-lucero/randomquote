@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# About
+A simple website for providing random quotes for everyone.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Kindly visit it at: https://paulo-lucero.github.io/randomquote/
 
-## Available Scripts
+# Features
+* Swipeable. Available only for touch devices, allows to change quotes by swiping left or right.
+* Quotes can be tweet.
 
-In the project directory, you can run:
+# Developer Notes
+The website is build using React library. Below is the list of app react components and its description:
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* `Arrows` - Rendered only on non-touch devices. Responsible for changing quotes.
+* `QuoteSwipeNotif` - Gives hint to the users that using touch screen, on how to change quotes. The notification is render when `touchstart` fired on the element with id "quote-content" and unrender when `touchend` event is fired.
+* `QuoteContainer` - Renders the the quote container element and quote elements.
+  * State properties:
+    * `quotes` - Array of quotes data.
+    * `quoteIndex` - The index of the `state.quotes` that will be displayed to the user.
+    * `isTouched` - Boolean or `null` value. Whether to display, undisplay or unrender the `QuoteSwipeNotif` component.
+    * `newCurrentPos` - If set with a `Number`, it's value will be set to the `this.animateQuoteData.currentPos`. This property is mostly used to provide adjustments on `this.animateQuoteData.currentPos`.
+  * Notable Methods:
+    * `restartQuoteCont`
+      * Made changes in `state` properties except `state.quotes` & `state.quoteIndex`. It can be also use to re-render the `QuoteContainer` component with previous state values.
+      * Parameters:
+        * `showNotif` - Accepts `0`, `null`, `true` or `false` values
+          * `0` - Use the previous `state.isTouched` value.
+          * `null` - Unrender the `QuoteSwipeNotif` component.
+          * `true | false` - show or unshown `QuoteSwipeNotif` component, providing `false` doesn't mean unrendering the `QuoteSwipeNotif` component but the `QuoteSwipeNotif` component will be automatically unrendered when fully undisplayed to the user.
+        * `resetCurrentPos` - Accepts `true` or `false` values
+          * `true | false` - if `true`, the `state.newCurrentPos` will set to `null` otherwise it will set to the previous `state.newCurrentPos` value. Setting `state.newCurrentPos` to `null` is necessary to avoid infinite loop on `QuoteContainer.componentDidUpdate`.
+    * `changeQuote`
+      * Display new quote by changing both `state.quotes` & `state.quoteIndex` or display previous quote, by changing only the `state.quoteIndex`.
+      * Parameter:
+        * `isForward` - Accepts `true` or `false` values
+          * `true | false` - if `true`, the quote container element will move to the left to show the newly added or stored quote from the right, otherwise the quote container element will move to the right to show the newly added or stored quote from the left.

@@ -22,6 +22,8 @@
 /test
 *.txt
 src/*.svg
+/favicon_io
+.python-version
 
 npm-debug.log*
 yarn-debug.log*

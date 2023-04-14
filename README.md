@@ -10,7 +10,7 @@ Kindly visit it at: https://paulo-lucero.github.io/randomquote/
 # Developer Notes
 The website is build using React library. Below is the list of app react components and its description:
 
-* `Arrows` - Rendered only on non-touch devices. Responsible for changing quotes.
+* `Arrows` - Rendered only large screen devices. Responsible for changing quotes.
 * `QuoteSwipeNotif` - Gives hint to the users that using touch screen, on how to change quotes. The notification is render when `touchstart` fired on the element with id "quote-content" and unrender when `touchend` event is fired.
 * `QuoteContainer` - Renders the the quote container element and quote elements.
   * State properties:

@@ -13,10 +13,8 @@ function genRandomIndex (arr) {
   return Math.floor(Math.random() * arr.length);
 }
 
-function isTouchDevice () {
-  return ('ontouchstart' in window) ||
-    (navigator.maxTouchPoints > 0) ||
-    (navigator.msMaxTouchPoints > 0);
+function isArrowsFit () {
+  return document.documentElement.offsetWidth < 650;
 }
 
 class Arrows extends React.Component {
@@ -54,7 +52,7 @@ class Arrows extends React.Component {
   }
 
   render () {
-    return !this.props.isTouchDevice
+    return !this.props.isArrowsFit
       ? <div
           id={this.props.isForward ? 'new-quote' : ''}
           onClick={this.arrowQuote}
@@ -72,7 +70,7 @@ class Arrows extends React.Component {
 Arrows.propTypes = {
   changeFunc: PropTypes.func,
   isForward: PropTypes.bool,
-  isTouchDevice: PropTypes.bool
+  isArrowsFit: PropTypes.bool
 };
 
 class QuoteSwipeNotif extends React.Component {
@@ -144,7 +142,7 @@ class QuoteSwipeNotif extends React.Component {
   }
 
   render () {
-    return this.props.isTouchDevice && this.props.isTouched !== null
+    return this.props.isTouched !== null
       ? <div
         ref={this.notifRef}
         id='swipeable-notif'
@@ -157,7 +155,6 @@ class QuoteSwipeNotif extends React.Component {
 }
 
 QuoteSwipeNotif.propTypes = {
-  isTouchDevice: PropTypes.bool,
   isTouched: PropTypes.bool,
   restartQuoteCont: PropTypes.func
 };
@@ -170,7 +167,7 @@ class QuoteContainer extends React.Component {
     this.boxDefaultSize = 800;
     this.quoteDefaultSize = 480;
     this.defaultUnit = 'px';
-    this.isTouchDevice = isTouchDevice();
+    this.isArrowsFit = isArrowsFit();
     this.animateQuoteData = {
       timeStart: null,
       currentPos: 0, // current position of the quote container
@@ -202,6 +199,7 @@ class QuoteContainer extends React.Component {
   }
 
   changeQuoteWidth () {
+    this.isArrowsFit = isArrowsFit();
     const animateQuoteData = this.animateQuoteData;
     const prevDefaultSize = animateQuoteData.defaultSize;
     const prevCurrentPos = animateQuoteData.currentPos;
@@ -475,19 +473,18 @@ class QuoteContainer extends React.Component {
     return (
       <React.Fragment>
         <QuoteSwipeNotif
-          isTouchDevice={this.isTouchDevice}
           isTouched={this.state.isTouched}
           restartQuoteCont={this.restartQuoteCont}
           />
         <div id='quote-box' style={{ width: `${this.boxSize}${defaultUnit}` }}>
           <div id='inner-quote-box' >
-            <Arrows changeFunc={this.changeQuote} isForward={false} isTouchDevice={this.isTouchDevice} />
+            <Arrows changeFunc={this.changeQuote} isForward={false} isArrowsFit={this.isArrowsFit} />
             <div
               id='quote-content'
               style={quoteContentStyle}
-              onTouchStart={this.isTouchDevice ? this.changeQuoteTouchStart : undefined}
-              onTouchMove={this.isTouchDevice ? this.changeQuoteTouchMove : undefined}
-              onTouchEnd={this.isTouchDevice ? this.changeQuoteTouchEnd : undefined} >
+              onTouchStart={this.changeQuoteTouchStart}
+              onTouchMove={this.changeQuoteTouchMove}
+              onTouchEnd={this.changeQuoteTouchEnd} >
               <div
                 ref={this.quoteCont}
                 id='quote-container'
@@ -507,7 +504,7 @@ class QuoteContainer extends React.Component {
                 }
               </div>
             </div>
-            <Arrows changeFunc={this.changeQuote} isForward={true} isTouchDevice={this.isTouchDevice} />
+            <Arrows changeFunc={this.changeQuote} isForward={true} isArrowsFit={this.isArrowsFit} />
           </div>
           <a
             ref={this.tweetRef}
